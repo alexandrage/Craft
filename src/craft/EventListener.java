@@ -23,6 +23,7 @@ public class EventListener implements Listener {
 				if (craft.get(i) != null) {
 					if (!craft.get(i).isSimilar(cont[i])) {
 						e.getInventory().setResult(new ItemStack(Material.AIR));
+						return;
 					}
 				}
 			}
