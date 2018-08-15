@@ -1,0 +1,24 @@
+result:
+  material: "DIAMOND"
+  amount: 2
+  customname: "РПГ"
+  lore:
+  - "Тестовый клафт"
+1:
+  material: "STONE"
+2:
+  material: "STONE"
+3:
+  material: "STONE"
+4:
+  material: "STONE"
+5:
+  material: "STONE"
+6:
+  material: "STONE"
+7:
+  material: "STONE"
+8:
+  material: "STONE"
+9:
+  material: "STONE"
