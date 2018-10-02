@@ -3,7 +3,7 @@ result:
   amount: 2
   customname: "РПГ"
   lore:
-  - "Тестовый клафт"
+  - "Тестовый крафт"
 1:
   material: "STONE"
 2:

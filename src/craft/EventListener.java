@@ -11,10 +11,14 @@ import org.bukkit.inventory.ShapedRecipe;
 public class EventListener implements Listener {
 	@EventHandler
 	public void on(PrepareItemCraftEvent e) {
-		ShapedRecipe rc = (ShapedRecipe) e.getRecipe();
-		if (rc == null) {
+		org.bukkit.inventory.Recipe r = e.getRecipe();
+		if (r == null) {
 			return;
 		}
+		if (!(r instanceof ShapedRecipe)) {
+			return;
+		}
+		ShapedRecipe rc = (ShapedRecipe) r;
 		if (Recipe.hasRecipe(rc.getKey().getKey())) {
 			CraftingInventory inv = e.getInventory();
 			Craft craft = Recipe.getRecipe(rc.getKey().getKey());
