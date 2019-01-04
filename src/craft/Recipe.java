@@ -23,7 +23,7 @@ public class Recipe {
 		cr.add(stack.getStack());
 		for (int i = 0; i < 9; i++) {
 			if (istack[i] != null && istack[i].getStack().getType() != Material.AIR) {
-				rc.setIngredient(String.valueOf(i).toCharArray()[0], istack[i].getStack().getType());
+				rc.setIngredient(Character.forDigit(i, 10), istack[i].getStack().getType());
 				cr.add(istack[i].getStack());
 			} else {
 				cr.add(null);
