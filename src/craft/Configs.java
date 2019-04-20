@@ -1,14 +1,14 @@
 package craft;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Configs {
-	private Map<String, CustomConfig> sfg = new HashMap<String, CustomConfig>();
+	private Map<String, CustomConfig> sfg = new ConcurrentHashMap<String, CustomConfig>();
 
 	public Configs(JavaPlugin plugin, File file) {
 		file.mkdirs();
