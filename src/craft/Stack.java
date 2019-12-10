@@ -11,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.gson.Gson;
@@ -21,6 +22,7 @@ public class Stack {
 	private int amount;
 	private int date;
 	private String customname;
+	private Integer modeldata;
 	private List<String> lore;
 	private Map<String, Integer> enchant;
 	private List<String> flags;
@@ -30,8 +32,9 @@ public class Stack {
 	public Stack(ConfigurationSection config) {
 		this.material = config.getString("material");
 		this.amount = config.getInt("amount", 1);
-		this.date = config.getInt("date", 0);
-		this.customname = config.getString("customname");
+		this.date = config.getInt("damage", 0);
+		this.modeldata = config.getInt("modeldata");
+		this.material = config.getString("material");
 		this.lore = (List<String>) config.get("lore");
 		for (Map<?, ?> enchs : config.getMapList("enchant")) {
 			for (Entry<?, ?> ench : enchs.entrySet()) {
@@ -44,10 +47,17 @@ public class Stack {
 	}
 
 	public ItemStack getStack() {
-		ItemStack stack = new ItemStack(Material.valueOf(material.toUpperCase()), amount, (short) date);
+		ItemStack stack = new ItemStack(Material.valueOf(material.toUpperCase()), amount);
 		ItemMeta meta = stack.getItemMeta();
+		if(meta instanceof Damageable) {
+			Damageable damege = (Damageable) meta;
+			damege.setDamage(date);
+		}
 		if (customname != null) {
 			meta.setDisplayName(customname);
+		}
+		if (modeldata != null) {
+			meta.setCustomModelData(modeldata);
 		}
 		if (lore != null) {
 			meta.setLore(lore);
