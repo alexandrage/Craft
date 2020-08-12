@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.inventory.ItemStack;
 
 public class Craft {
-	List<ItemStack> stacks = new ArrayList<ItemStack>();
+	private List<ItemStack> stacks = new ArrayList<ItemStack>();
 
 	public void add(ItemStack stack) {
 		stacks.add(stack);
