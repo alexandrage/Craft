@@ -9,7 +9,7 @@ public class CustomConfig {
 
 	private YamlConfiguration yml;
 	private File file;
-	JavaPlugin plugin;
+	private JavaPlugin plugin;
 
 	public CustomConfig(JavaPlugin plugin, String name, boolean isResource) {
 		this.plugin = plugin;
