@@ -18,4 +18,9 @@ public class Main extends JavaPlugin {
 							list.getMap().get("7"), list.getMap().get("8"), list.getMap().get("9") });
 		}
 	}
+
+	@Override
+	public void onDisable() {
+		Recipe.removeRecipe(this);
+	}
 }

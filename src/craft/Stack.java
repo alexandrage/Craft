@@ -22,7 +22,7 @@ public class Stack {
 	private int amount;
 	private int date;
 	private String customname;
-	private Integer modeldata;
+	private int modeldata;
 	private List<String> lore;
 	private Map<String, Integer> enchant;
 	private List<String> flags;
@@ -33,7 +33,7 @@ public class Stack {
 		this.material = config.getString("material");
 		this.amount = config.getInt("amount", 1);
 		this.date = config.getInt("damage", 0);
-		this.modeldata = config.getInt("modeldata");
+		this.modeldata = config.getInt("modeldata", -1);
 		this.material = config.getString("material");
 		this.lore = (List<String>) config.get("lore");
 		for (Map<?, ?> enchs : config.getMapList("enchant")) {
@@ -49,14 +49,14 @@ public class Stack {
 	public ItemStack getStack() {
 		ItemStack stack = new ItemStack(Material.valueOf(material.toUpperCase()), amount);
 		ItemMeta meta = stack.getItemMeta();
-		if(meta instanceof Damageable) {
+		if (meta instanceof Damageable) {
 			Damageable damege = (Damageable) meta;
 			damege.setDamage(date);
 		}
 		if (customname != null) {
 			meta.setDisplayName(customname);
 		}
-		if (modeldata != null) {
+		if (modeldata > 0) {
 			meta.setCustomModelData(modeldata);
 		}
 		if (lore != null) {

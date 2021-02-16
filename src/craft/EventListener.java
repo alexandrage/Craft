@@ -8,6 +8,8 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import com.destroystokyo.paper.event.player.PlayerRecipeBookClickEvent;
+
 public class EventListener implements Listener {
 	@EventHandler
 	public void on(PrepareItemCraftEvent e) {
@@ -31,6 +33,14 @@ public class EventListener implements Listener {
 					}
 				}
 			}
+		}
+	}
+
+	@EventHandler
+	public void on(PlayerRecipeBookClickEvent e) {
+		if (Recipe.hasRecipe(e.getRecipe().getKey())) {
+			e.getPlayer().getOpenInventory().getTopInventory();
+			//TODO
 		}
 	}
 }

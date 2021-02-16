@@ -2,6 +2,7 @@ package craft;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 
 public class Recipe {
-	private static Map<String, Craft> craft = new HashMap<String, Craft>();
+	private static Map<String, Craft> crafts = new HashMap<String, Craft>();
 
 	public static void addRecipe(Plugin plugin, Stack stack, Stack[] istack) {
 		if (stack == null) {
@@ -30,14 +31,22 @@ public class Recipe {
 			}
 		}
 		Bukkit.getServer().addRecipe(rc);
-		craft.put(rc.getKey().getKey(), cr);
+		crafts.put(rc.getKey().getKey(), cr);
+	}
+	
+	
+	public static void removeRecipe(Plugin plugin) {
+		for(Entry<String, Craft> craft : crafts.entrySet()) {
+			Bukkit.getServer().removeRecipe(new NamespacedKey(plugin, craft.getKey()));
+		}
+		crafts.clear();
 	}
 
 	public static Craft getRecipe(String key) {
-		return craft.get(key);
+		return crafts.get(key);
 	}
 
 	public static Boolean hasRecipe(String key) {
-		return craft.containsKey(key);
+		return crafts.containsKey(key);
 	}
 }
