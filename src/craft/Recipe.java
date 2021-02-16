@@ -8,13 +8,19 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 
 public class Recipe {
-	private static Map<String, Craft> crafts = new HashMap<String, Craft>();
+	private Map<String, Craft> crafts = new HashMap<String, Craft>();
+	private Plugin plugin;
 
-	public static void addRecipe(Plugin plugin, Stack stack, Stack[] istack) {
+	public Recipe(Plugin plugin) {
+		this.plugin = plugin;
+	}
+
+	public void addRecipe(Stack stack, Stack[] istack) {
 		if (stack == null) {
 			throw new IllegalArgumentException("Result cannot be null.");
 		}
@@ -33,20 +39,25 @@ public class Recipe {
 		Bukkit.getServer().addRecipe(rc);
 		crafts.put(rc.getKey().getKey(), cr);
 	}
-	
-	
-	public static void removeRecipe(Plugin plugin) {
-		for(Entry<String, Craft> craft : crafts.entrySet()) {
-			Bukkit.getServer().removeRecipe(new NamespacedKey(plugin, craft.getKey()));
+
+	public void removeRecipe() {
+		for (Entry<String, Craft> craft : this.crafts.entrySet()) {
+			Bukkit.getServer().removeRecipe(new NamespacedKey(this.plugin, craft.getKey()));
 		}
-		crafts.clear();
+		this.crafts.clear();
 	}
 
-	public static Craft getRecipe(String key) {
-		return crafts.get(key);
+	public Craft getRecipe(String key) {
+		return this.crafts.get(key);
 	}
 
-	public static Boolean hasRecipe(String key) {
-		return crafts.containsKey(key);
+	public Boolean hasRecipe(String key) {
+		return this.crafts.containsKey(key);
+	}
+
+	public void discoverRecipes(Player player) {
+		for (Entry<String, Craft> craft : this.crafts.entrySet()) {
+			player.discoverRecipe(new NamespacedKey(plugin, craft.getKey()));
+		}
 	}
 }

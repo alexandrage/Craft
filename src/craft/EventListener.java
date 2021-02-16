@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -11,6 +12,17 @@ import org.bukkit.inventory.ShapedRecipe;
 import com.destroystokyo.paper.event.player.PlayerRecipeBookClickEvent;
 
 public class EventListener implements Listener {
+	private Recipe recipe;
+
+	public EventListener(Recipe recipe) {
+		this.recipe = recipe;
+	}
+
+	@EventHandler
+	public void on(PlayerJoinEvent e) {
+		this.recipe.discoverRecipes(e.getPlayer());
+	}
+
 	@EventHandler
 	public void on(PrepareItemCraftEvent e) {
 		org.bukkit.inventory.Recipe r = e.getRecipe();
@@ -21,9 +33,9 @@ public class EventListener implements Listener {
 			return;
 		}
 		ShapedRecipe rc = (ShapedRecipe) r;
-		if (Recipe.hasRecipe(rc.getKey().getKey())) {
+		if (this.recipe.hasRecipe(rc.getKey().getKey())) {
 			CraftingInventory inv = e.getInventory();
-			Craft craft = Recipe.getRecipe(rc.getKey().getKey());
+			Craft craft = this.recipe.getRecipe(rc.getKey().getKey());
 			ItemStack[] cont = inv.getContents();
 			for (int i = 0; i < cont.length; i++) {
 				if (craft.get(i) != null) {
@@ -38,9 +50,9 @@ public class EventListener implements Listener {
 
 	@EventHandler
 	public void on(PlayerRecipeBookClickEvent e) {
-		if (Recipe.hasRecipe(e.getRecipe().getKey())) {
+		if (this.recipe.hasRecipe(e.getRecipe().getKey())) {
 			e.getPlayer().getOpenInventory().getTopInventory();
-			//TODO
+			// TODO
 		}
 	}
 }
