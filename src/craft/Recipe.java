@@ -3,8 +3,6 @@ package craft;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,11 +18,11 @@ public class Recipe {
 		this.plugin = plugin;
 	}
 
-	public void addRecipe(Stack stack, Stack[] istack) {
+	public void addRecipe(String name, Stack stack, Stack[] istack) {
 		if (stack == null) {
 			throw new IllegalArgumentException("Result cannot be null.");
 		}
-		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(plugin, UUID.randomUUID().toString()), stack.getStack());
+		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(plugin, name), stack.getStack());
 		rc.shape("012", "345", "678");
 		Craft cr = new Craft();
 		cr.add(stack.getStack());
