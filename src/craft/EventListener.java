@@ -14,6 +14,8 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+
 import com.destroystokyo.paper.event.player.PlayerRecipeBookClickEvent;
 
 public class EventListener implements Listener {
@@ -150,6 +152,14 @@ public class EventListener implements Listener {
 	}
 
 	public boolean isSimilar(ItemStack s1, ItemStack s2) {
+		ItemMeta m1 = s1.getItemMeta();
+		ItemMeta m2 = s2.getItemMeta();
+		if (m1 == null || m2 == null) {
+			return false;
+		}
+		if (m1.hasCustomModelData() && m2.hasCustomModelData()) {
+			return s1.getType() == s2.getType() && m1.getCustomModelData() == m2.getCustomModelData();
+		}
 		return s1.isSimilar(s2);
 	}
 }
